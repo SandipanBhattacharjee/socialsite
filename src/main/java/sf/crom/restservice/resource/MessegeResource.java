@@ -52,25 +52,57 @@ public class MessegeResource{
 	// using beans class using annotations
 	
 	@GET
-	public List<Messege> getMessege(@BeanParam MessageParamBean bean){
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Messege> getJSONMessege(@BeanParam MessageParamBean bean){
+
 		int year=bean.getYear();
 		int start=bean.getStart();
 		int size=bean.getSize();
 		if(year>0){
 			return messegeService.getAllMessegesForAYear(year);
-		}else if(start>=0 && size>=0){
+		}else if(start>=0 && size>0){
 			return messegeService.getAllMessegePaginated(start, size);
-		}else{
-			return messegeService.getAllMesseges();
 		}
+			return messegeService.getAllMesseges();
 	}
 	
+	@GET
+	@Produces(MediaType.TEXT_XML)
+	//Application  text/xml
+	public List<Messege> getXMLMessege(@BeanParam MessageParamBean bean){
+
+		int year=bean.getYear();
+		int start=bean.getStart();
+		int size=bean.getSize();
+		if(year>0){
+			return messegeService.getAllMessegesForAYear(year);
+		}else if(start>=0 && size>0){
+			return messegeService.getAllMessegePaginated(start, size);
+		}
+			return messegeService.getAllMesseges();
+	}
 
 	@GET
 	@Path("/{messegeId}")
-	public Messege getMessegeUsingId(@PathParam("messegeId") long messegeId){
-		System.out.println("messege id is "+messegeId);
-		return messegeService.getMessegeUsingId(messegeId);
+	public Messege getMessegeUsingId(@PathParam("messegeId") long messegeId,@Context UriInfo uriInfo){
+		Messege messege=messegeService.getMessegeUsingId(messegeId);
+		//return messege; // after this comes the HATEOS implementation
+		String selfUrl=uriInfo.getAbsolutePathBuilder().build().toString();
+//		String url=uriInfo.getBaseUriBuilder()
+//				.path(MessegeResource.class)
+//				.path(String.valueOf(messege.getId()))
+//				.build().toString();
+		String profileUrl=uriInfo.getBaseUriBuilder()
+				.path(ProfileResources.class)
+				.path(messege.getAuthor())
+				.toString();
+		
+		
+		messege.addLink(selfUrl, "self");
+		messege.addLink(profileUrl, "profile");
+		
+		
+		return messege;
 	}
 
 

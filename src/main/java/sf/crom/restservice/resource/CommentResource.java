@@ -39,12 +39,9 @@ public class CommentResource {
 	
 	@POST
 	public Comment addComment(@PathParam("messegeId") long messegeId, Comment comment){
+		System.out.println(messegeId+"  "+comment.getAuthor()+"  "+comment.getMessage());
 		return commentService.addComment(messegeId, comment);
 	}
-	
-	
-	
-	
 	
 	@PUT
 	@Path("/{commentId}")

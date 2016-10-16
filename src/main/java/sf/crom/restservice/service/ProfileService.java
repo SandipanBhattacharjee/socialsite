@@ -13,9 +13,9 @@ public class ProfileService {
 	private Map<String, Profile> profiles=DataBaseStubClass.getProfiles();
 
 		public ProfileService(){
-			profiles.put("Sandy", new Profile(1L,"Sandy","Sandipan","Bhattacharjee"));
+			profiles.put("Sandipan", new Profile(1L,"Sandy","Sandipan","Bhattacharjee"));
 			profiles.put("Naru", new Profile(2L,"Naru","Narayan","Bhattacharjee"));
-			profiles.put("Ruch", new Profile(3L,"Ruch","Ruchi","Shivhare"));
+			profiles.put("Ruchi", new Profile(3L,"Ruch","Ruchi","Shivhare"));
 			profiles.put("JP", new Profile(4L,"JP","Jagadeesh","Shivhare"));
 		}
 

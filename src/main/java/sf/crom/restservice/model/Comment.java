@@ -2,9 +2,10 @@ package sf.crom.restservice.model;
 
 import java.util.Date;
 
-public class Comment {
-	
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
+public class Comment {
 	private long id;
     private String message;
     private Date created;
